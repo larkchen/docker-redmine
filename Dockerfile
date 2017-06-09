@@ -12,7 +12,8 @@ RUN dpkg --get-selections | awk '{ print $1 }' > /dpkg.list.origin &&\
   git clone https://github.com/Restream/redmine_custom_reports.git plugins/redmine_custom_reports &&\
   bundle install --no-deployment &&\
   bundle clean --force &&\
-  rm -rf plugins/redmine_knowledgebase plugins/clipboard_image_paste &&\
+  cd plugins &&\
+  rm -rf $(ls -F | grep '/$') &&\
   apt-get autoremove -y --purge $(cat /dpkg.list.install) &&\
   apt-get autoremove -y --purge $(dpkg --get-selections | awk '{ print $1 }' | grep .*-dev) &&\
   apt-get clean all &&\

@@ -12,10 +12,10 @@ RUN dpkg --get-selections | awk '{ print $1 }' > /dpkg.list.origin &&\
   git clone https://github.com/Restream/redmine_custom_reports.git plugins/redmine_custom_reports &&\
   bundle install --no-deployment &&\
   bundle clean --force &&\
+  wget https://oss-binaries.phusionpassenger.com/binaries/passenger/by_release/5.1.4/agent-x86_64-linux.tar.gz &&\
+  tar zxf agent-x86_64-linux.tar.gz -C /usr/bin &&\
   apt-get autoremove -y --purge $(cat /dpkg.list.install) &&\
   apt-get autoremove -y --purge $(dpkg --get-selections | awk '{ print $1 }' | grep .*-dev) &&\
   apt-get clean all &&\
   apt-get autoclean &&\
-  wget https://oss-binaries.phusionpassenger.com/binaries/passenger/by_release/5.1.4/agent-x86_64-linux.tar.gz &&\
-  tar zxf agent-x86_64-linux.tar.gz -C /usr/bin &&\
   rm -f agent-x86_64-linux.tar.gz /dpkg.list.origin /dpkg.list.install
